@@ -8,28 +8,28 @@ import { User } from './entities/user.entity';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @Post()
-  create(@Body() userData: User) {
-    return this.usersService.create(userData);
-  }
+  // @Post()
+  // create(@Body() userData: User) {
+  //   return this.usersService.create(userData);
+  // }
+
+  // @Get()
+  // findAll() {
+  //   return this.usersService.findAll();
+  // }
 
   @Get()
-  findAll() {
-    return this.usersService.findAll();
+  findOne(username: string, password: string) {
+      return this.usersService.findUser(username, password);
   }
 
-  @Get('')
-  findOne(@Param('id') username: string, pass: string) {
-      return this.usersService.findOne(username, pass);
-  }
+  // @Patch(':id')
+  // update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+  //   return this.usersService.update(+id, updateUserDto);
+  // }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.usersService.update(+id, updateUserDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.usersService.remove(+id);
-  }
+  // @Delete(':id')
+  // remove(@Param('id') id: string) {
+  //   return this.usersService.remove(+id);
+  // }
 }
