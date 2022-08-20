@@ -1,35 +1,20 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Req } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, UseGuards, Put, Headers } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
-import { User } from './entities/user.entity';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  // @Post()
-  // create(@Body() userData: User) {
-  //   return this.usersService.create(userData);
-  // }
-
-  // @Get()
-  // findAll() {
-  //   return this.usersService.findAll();
-  // }
-
-  @Get()
-  findOne(username: string, password: string) {
-      return this.usersService.findUser(username, password);
+  @Get('email-verify/:id')
+  async EmailVerify(@Param('id') id: string, @Headers('Authorization') token: string) {
+      return this.usersService.EmailVerify(+id, token);
   }
 
-  // @Patch(':id')
-  // update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-  //   return this.usersService.update(+id, updateUserDto);
-  // }
+  @UseGuards(JwtAuthGuard)
+  @Get('profile/:id')
+  async getProfile(@Param('id') id: string, @Headers('Authorization') token: string) {
+    return this.usersService.getProfile(+id, token) ;
+  }
 
-  // @Delete(':id')
-  // remove(@Param('id') id: string) {
-  //   return this.usersService.remove(+id);
-  // }
 }

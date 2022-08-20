@@ -1,4 +1,5 @@
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Role } from "src/roles/role.entity";
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity()
 export class User {
@@ -20,6 +21,15 @@ export class User {
     @Column({type:'varchar'})
     password: string 
 
+    @Column({type:'varchar'})
+    phone_number: string
+
+    @ManyToOne(() => Role, role => role.user, { cascade: true, onDelete: "SET NULL" })
+    role: Role;
+
+    @Column({type: 'boolean', unique: false, default: false})
+    is_verified: boolean;
+
     @CreateDateColumn()
     created_at: Date 
 
@@ -28,4 +38,10 @@ export class User {
 
     @DeleteDateColumn()
     deleted_at: Date
+
+    @Column({type: 'boolean', unique: false, default: false})
+    is_blocked: boolean;
+
+    @Column({type:'varchar', nullable: true})
+    profile_image_url: string
 }
