@@ -19,7 +19,7 @@ import { UsersModule } from './users/users.module';
       port: 3306,
       username: 'root',
       password: '',
-      database: 'auth',
+      database: 'nest-auth',
       entities: [User, Role],
       synchronize: true,
     }),

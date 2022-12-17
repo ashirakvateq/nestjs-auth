@@ -28,7 +28,7 @@ export class AuthService {
     }
   }
 
-  async login(user: any, token: string) {
+  async login(user: any) {
     try{
       const currentUser = await this.usersService.findUser(user.user_name);
 
@@ -65,8 +65,8 @@ export class AuthService {
     return compareSync(plainPassword, userPassword);
   }
 
-  async register(user: any, token: string){
-    return await this.usersService.registerUser(user, token).then(async (res) => {
+  async register(user: any){
+    return await this.usersService.registerUser(user, undefined).then(async (res) => {
       await this.mailService.sendUserConfirmation(user);
       return res;
     }).catch(e => {

@@ -8,12 +8,12 @@ export class AuthController {
   constructor(private authService: AuthService) {}
 
   @Post('/login')
-  async login(@Request() req, @Headers('Authorization') token: string) {
-    return this.authService.login(req.body, token);
+  async login(@Request() req) {
+    return this.authService.login(req.body);
   }
 
   @Post('/register')
-  async register(@Body() userData: User, @Headers('Authorization') token: string){
-    return this.authService.register(userData, token);
+  async register(@Body() userData: User){
+    return this.authService.register(userData);
   }
 }
